@@ -30,6 +30,10 @@ export default function Home() {
         <Link href="/new" style={{ color: '#FF2D78', fontFamily: 'monospace', fontSize: '13px', letterSpacing: '2px' }}>
           + Drop
         </Link>
+        <Link href="/about" style={{ color: 'rgba(240,238,255,0.3)', fontFamily: 'monospace', fontSize: '11px', letterSpacing: '2px' }}>
+  Manifesto
+</Link>
+
       </div>
     </main>
   )
