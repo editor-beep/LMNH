@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 import Link from 'next/link'
+import Avatar from '../../components/Avatar'
 
 export default function DropPage({ params }) {
  const [drop, setDrop] = useState(null)
@@ -20,7 +21,7 @@ export default function DropPage({ params }) {
  async function fetchDrop() {
    const { data } = await supabase
      .from('drops')
-     .select('*, profiles(username, display_name)')
+     .select('*, profiles(username, display_name, avatar_url)')
      .eq('id', params.id)
      .single()
    setDrop(data)
@@ -30,7 +31,7 @@ export default function DropPage({ params }) {
  async function fetchComments() {
    const { data } = await supabase
      .from('comments')
-     .select('*, profiles(username)')
+     .select('*, profiles(username, avatar_url)')
      .eq('drop_id', params.id)
      .order('created_at', { ascending: true })
    setComments(data || [])
@@ -92,7 +93,6 @@ export default function DropPage({ params }) {
  return (
    <main style={{ minHeight: '100vh', background: '#080810', fontFamily: 'monospace' }}>
 
-     {/* NAV */}
      <nav style={{
        padding: '16px 32px',
        borderBottom: '1px solid rgba(0,245,255,0.1)',
@@ -118,14 +118,11 @@ export default function DropPage({ params }) {
 
        {/* BUILDER */}
        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
-         <div style={{
-           width: '32px', height: '32px',
-           background: 'linear-gradient(135deg, #FF2D78, #9B30FF)',
-           display: 'flex', alignItems: 'center', justifyContent: 'center',
-           fontSize: '12px', color: '#fff'
-         }}>
-           {(drop.profiles?.username || '?')[0].toUpperCase()}
-         </div>
+         <Avatar
+           url={drop.profiles?.avatar_url}
+           username={drop.profiles?.username}
+           size={32}
+         />
          <Link href={`/builder/${drop.profiles?.username}`} style={{ color: 'rgba(240,238,255,0.5)', fontSize: '12px', letterSpacing: '1px', textDecoration: 'none' }}>
            @{drop.profiles?.username}
          </Link>
@@ -158,18 +155,55 @@ export default function DropPage({ params }) {
          </p>
        )}
 
+       {/* SCREENSHOTS */}
+       {drop.screenshot_urls?.length > 0 && (
+         <div style={{ marginBottom: '24px' }}>
+           <p style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', letterSpacing: '2px', marginBottom: '12px' }}>
+             // SCREENSHOTS
+           </p>
+           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+             {drop.screenshot_urls.map((url, i) => (
+               <img
+                 key={i}
+                 src={url}
+                 alt={`screenshot ${i + 1}`}
+                 style={{
+                   width: i === 0 ? '100%' : 'calc(50% - 4px)',
+                   height: i === 0 ? '240px' : '120px',
+                   objectFit: 'cover',
+                   border: '1px solid rgba(255,255,255,0.06)'
+                 }}
+               />
+             ))}
+           </div>
+         </div>
+       )}
+
        {/* TOOLS */}
        {drop.tools_used?.length > 0 && (
          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '24px' }}>
            {drop.tools_used.map(tool => (
              <span key={tool} style={{
-               fontSize: '10px',
-               padding: '3px 8px',
+               fontSize: '10px', padding: '3px 8px',
                border: '1px solid rgba(0,245,255,0.25)',
-               color: '#00F5FF',
-               letterSpacing: '1px'
+               color: '#00F5FF', letterSpacing: '1px'
              }}>
                {tool}
+             </span>
+           ))}
+         </div>
+       )}
+
+       {/* TAGS */}
+       {drop.tags?.length > 0 && (
+         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '24px' }}>
+           {drop.tags.map(tag => (
+             <span key={tag} style={{
+               fontSize: '10px', padding: '3px 8px',
+               border: '1px solid rgba(155,48,255,0.25)',
+               color: 'rgba(155,48,255,0.6)', letterSpacing: '1px'
+             }}>
+               #{tag}
              </span>
            ))}
          </div>
@@ -244,18 +278,25 @@ export default function DropPage({ params }) {
 
          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
            {comments.map(c => (
-             <div key={c.id} style={{ borderLeft: '2px solid rgba(0,245,255,0.2)', paddingLeft: '16px' }}>
-               <div style={{ display: 'flex', gap: '10px', marginBottom: '6px', alignItems: 'center' }}>
-                 <span style={{ color: '#00F5FF', fontSize: '11px', letterSpacing: '1px' }}>
-                   @{c.profiles?.username}
-                 </span>
-                 <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '10px' }}>
-                   {new Date(c.created_at).toLocaleDateString()}
-                 </span>
+             <div key={c.id} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+               <Avatar
+                 url={c.profiles?.avatar_url}
+                 username={c.profiles?.username}
+                 size={28}
+               />
+               <div style={{ flex: 1, borderLeft: '2px solid rgba(0,245,255,0.2)', paddingLeft: '16px' }}>
+                 <div style={{ display: 'flex', gap: '10px', marginBottom: '6px', alignItems: 'center' }}>
+                   <span style={{ color: '#00F5FF', fontSize: '11px', letterSpacing: '1px' }}>
+                     @{c.profiles?.username}
+                   </span>
+                   <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '10px' }}>
+                     {new Date(c.created_at).toLocaleDateString()}
+                   </span>
+                 </div>
+                 <p style={{ color: 'rgba(240,238,255,0.7)', fontSize: '14px', lineHeight: '1.6' }}>
+                   {c.body}
+                 </p>
                </div>
-               <p style={{ color: 'rgba(240,238,255,0.7)', fontSize: '14px', lineHeight: '1.6' }}>
-                 {c.body}
-               </p>
              </div>
            ))}
          </div>
