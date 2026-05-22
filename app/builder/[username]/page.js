@@ -177,18 +177,28 @@ export default function BuilderPage({ params }) {
             </Link>
           )}
 
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
-              <span style={{ color: '#F0EEFF' }}>{drops.length}</span> drops
-            </span>
-            <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
-              <span style={{ color: '#F0EEFF' }}>{followerCount}</span> followers
-            </span>
-            <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
-              <span style={{ color: '#C8FF00' }}>{profile.credits_balance}</span> credits
-            </span>
-          </div>
-        </div>
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'center' }}>
+  <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
+    <span style={{ color: '#F0EEFF' }}>{drops.length}</span> drops
+  </span>
+  <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
+    <span style={{ color: '#F0EEFF' }}>{followerCount}</span> followers
+  </span>
+  <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
+    <span style={{ color: '#C8FF00' }}>{profile.credits_balance}</span> credits
+  </span>
+  {profile.website_url && (
+    <a href={profile.website_url} target="_blank" rel="noopener noreferrer" style={{
+      color: 'rgba(240,238,255,0.4)',
+      fontSize: '12px',
+      textDecoration: 'none',
+      letterSpacing: '1px'
+    }}>
+      ↗ website
+    </a>
+  )}
+</div>
+
 
         {/* DROPS */}
         <p style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', letterSpacing: '3px', marginBottom: '24px' }}>
