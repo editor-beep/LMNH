@@ -198,7 +198,7 @@ export default function BuilderPage({ params }) {
     </a>
   )}
 </div>
-
+</div>
 
         {/* DROPS */}
         <p style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', letterSpacing: '3px', marginBottom: '24px' }}>
