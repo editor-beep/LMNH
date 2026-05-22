@@ -6,6 +6,7 @@ import Link from 'next/link'
 export default function Feed() {
   const [drops, setDrops] = useState([])
   const [promoted, setPromoted] = useState([])
+  const [trending, setTrending] = useState([])
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -18,6 +19,7 @@ export default function Feed() {
     })
     fetchDrops()
     fetchPromoted()
+    fetchTrending()
   }, [])
 
   async function fetchDrops() {
@@ -46,10 +48,21 @@ export default function Feed() {
     setPromoted(data || [])
   }
 
+  async function fetchTrending() {
+    const { data } = await supabase
+      .from('trending_drops')
+      .select(`
+        *,
+        profiles(username, display_name, avatar_url)
+      `)
+
+    setTrending(data || [])
+  }
+
   async function handleLike(dropId) {
     if (!user) { window.location.href = '/login'; return }
     await supabase.from('likes').insert({ user_id: user.id, drop_id: dropId })
-    await supabase.from('drops').update({ like_count: drops.find(d => d.id === dropId).like_count + 1 }).eq('id', dropId)
+    await supabase.from('drops').update({ like_count: drops.find(d => d.id === dropId)?.like_count + 1 }).eq('id', dropId)
     supabase.rpc('award_credits', {
       p_user_id: user.id,
       p_action_type: 'EARN_LIKE',
@@ -58,19 +71,34 @@ export default function Feed() {
       p_reference_id: dropId
     })
     fetchDrops()
+    fetchTrending()
   }
 
-  function DropCard({ drop, isPromoted }) {
+  const trendingIds = new Set(trending.map(d => d.id))
+  const topDrop = trending[0]
+
+  function DropCard({ drop, isPromoted, isMerit }) {
+    const isTrending = trendingIds.has(drop.id)
+
     return (
       <div style={{
-        background: isPromoted ? '#0e0e1a' : '#080810',
+        background: isMerit ? '#0a0a14' : isPromoted ? '#0e0e1a' : '#080810',
         padding: '28px 32px',
         transition: 'background 0.15s',
-        borderLeft: isPromoted ? '2px solid #C8FF00' : 'none'
+        borderLeft: isMerit
+          ? '2px solid #FF2D78'
+          : isPromoted
+          ? '2px solid #C8FF00'
+          : 'none'
       }}
         onMouseEnter={e => e.currentTarget.style.background = '#0e0e1a'}
-        onMouseLeave={e => e.currentTarget.style.background = isPromoted ? '#0e0e1a' : '#080810'}
+        onMouseLeave={e => e.currentTarget.style.background = isMerit ? '#0a0a14' : isPromoted ? '#0e0e1a' : '#080810'}
       >
+        {isMerit && (
+          <p style={{ color: '#FF2D78', fontSize: '9px', letterSpacing: '3px', marginBottom: '12px' }}>
+            ⚡ MOST LIKED · LAST 48 HOURS
+          </p>
+        )}
         {isPromoted && (
           <p style={{ color: '#C8FF00', fontSize: '9px', letterSpacing: '3px', marginBottom: '12px' }}>
             ★ PROMOTED
@@ -106,6 +134,7 @@ export default function Feed() {
             letterSpacing: '0.5px',
             lineHeight: '1.4'
           }}>
+            {isTrending && !isMerit && <span style={{ marginRight: '8px' }}>🔥</span>}
             {drop.title}
           </h2>
         </Link>
@@ -196,8 +225,20 @@ export default function Feed() {
         </div>
       </nav>
 
-      {/* FEED */}
       <div style={{ maxWidth: '680px', margin: '0 auto', padding: '40px 24px' }}>
+
+        {/* MERIT SLOT — top drop by 48hr likes */}
+        {topDrop && (
+          <div style={{ marginBottom: '40px' }}>
+            <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: '#FF2D78', fontSize: '11px', letterSpacing: '3px' }}>// RISING</span>
+              <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '10px' }}>most liked · last 48hrs · pure merit</span>
+            </div>
+            <div style={{ background: 'rgba(255,45,120,0.06)' }}>
+              <DropCard drop={topDrop} isPromoted={false} isMerit={true} />
+            </div>
+          </div>
+        )}
 
         {/* PROMOTED */}
         {promoted.length > 0 && (
@@ -207,7 +248,7 @@ export default function Feed() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(200,255,0,0.06)' }}>
               {promoted.map(drop => (
-                <DropCard key={drop.id} drop={drop} isPromoted={true} />
+                <DropCard key={drop.id} drop={drop} isPromoted={true} isMerit={false} />
               ))}
             </div>
           </div>
@@ -230,7 +271,7 @@ export default function Feed() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(0,245,255,0.06)' }}>
           {drops.map(drop => (
-            <DropCard key={drop.id} drop={drop} isPromoted={false} />
+            <DropCard key={drop.id} drop={drop} isPromoted={false} isMerit={false} />
           ))}
         </div>
       </div>
