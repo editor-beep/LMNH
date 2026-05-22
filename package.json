@@ -1,3 +1,13 @@
 {
-  "name": "lmnh"
+  "name": "lmnh",
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
 }
