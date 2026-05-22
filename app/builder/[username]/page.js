@@ -162,6 +162,21 @@ export default function BuilderPage({ params }) {
             </p>
           )}
 
+          {isOwnProfile && (
+            <Link href="/settings" style={{
+              display: 'inline-block',
+              color: 'rgba(240,238,255,0.4)',
+              fontSize: '11px',
+              letterSpacing: '2px',
+              textDecoration: 'none',
+              border: '1px solid rgba(255,255,255,0.1)',
+              padding: '8px 16px',
+              marginBottom: '16px'
+            }}>
+              Edit Profile
+            </Link>
+          )}
+
           <div style={{ display: 'flex', gap: '24px' }}>
             <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
               <span style={{ color: '#F0EEFF' }}>{drops.length}</span> drops
