@@ -14,7 +14,13 @@ export default function Login() {
     setMessage('')
 
     if (mode === 'signup') {
-      const { error } = await supabase.auth.signUp({ email, password })
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: 'https://lmnh.vercel.app'
+        }
+      })
       if (error) setMessage(error.message)
       else setMessage('Check your email to confirm your account.')
     } else {
