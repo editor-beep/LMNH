@@ -112,10 +112,10 @@ export default function DropPage({ params }) {
           }}>
             {(drop.profiles?.username || '?')[0].toUpperCase()}
           </div>
-          <span style={{ color: 'rgba(240,238,255,0.5)', fontSize: '12px', letterSpacing: '1px' }}>
-            @{drop.profiles?.username}
-          </span>
-          <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', marginLeft: 'auto' }}>
+          <Link href={`/builder/${drop.profiles?.username}`} style={{ color: 'rgba(240,238,255,0.5)', fontSize: '12px', letterSpacing: '1px', textDecoration: 'none' }}>
+  @{drop.profiles?.username}
+</Link>
+    <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', marginLeft: 'auto' }}>
             {new Date(drop.created_at).toLocaleDateString()}
           </span>
         </div>
