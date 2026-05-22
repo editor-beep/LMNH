@@ -69,6 +69,11 @@ export default function Feed() {
              + DROP
            </Link>
          )}
+         {user && (
+           <Link href="/credits" style={{ color: '#C8FF00', fontSize: '11px', letterSpacing: '2px', textDecoration: 'none' }}>
+             credits
+           </Link>
+         )}
          {user
            ? <span onClick={() => supabase.auth.signOut().then(() => window.location.reload())} style={{ color: 'rgba(240,238,255,0.3)', fontSize: '11px', cursor: 'pointer' }}>sign out</span>
            : <Link href="/login" style={{ color: 'rgba(240,238,255,0.3)', fontSize: '11px', textDecoration: 'none' }}>sign in</Link>
