@@ -1,7 +1,18 @@
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Look Mom No Hands',
+  description: 'Built with AI. Shared with pride.',
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body style={{ margin: 0, padding: 0, background: '#080810' }}>
+        {children}
+      </body>
     </html>
   )
 }
