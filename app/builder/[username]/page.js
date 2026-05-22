@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 import Link from 'next/link'
+import Avatar from '../../components/Avatar'
 
 export default function BuilderPage({ params }) {
  const [profile, setProfile] = useState(null)
@@ -94,7 +95,6 @@ export default function BuilderPage({ params }) {
  return (
    <main style={{ minHeight: '100vh', background: '#080810', fontFamily: 'monospace' }}>
 
-     {/* NAV */}
      <nav style={{
        padding: '16px 32px',
        borderBottom: '1px solid rgba(0,245,255,0.1)',
@@ -118,7 +118,6 @@ export default function BuilderPage({ params }) {
 
      <div style={{ maxWidth: '680px', margin: '0 auto', padding: '40px 24px' }}>
 
-       {/* PROFILE HEADER */}
        <div style={{
          borderBottom: '1px solid rgba(255,255,255,0.06)',
          paddingBottom: '32px',
@@ -126,14 +125,11 @@ export default function BuilderPage({ params }) {
        }}>
          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px' }}>
            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-             <div style={{
-               width: '56px', height: '56px',
-               background: 'linear-gradient(135deg, #FF2D78, #9B30FF)',
-               display: 'flex', alignItems: 'center', justifyContent: 'center',
-               fontSize: '20px', color: '#fff', fontFamily: 'monospace'
-             }}>
-               {profile.username[0].toUpperCase()}
-             </div>
+             <Avatar
+               url={profile.avatar_url}
+               username={profile.username}
+               size={56}
+             />
              <div>
                <h1 style={{ color: '#F0EEFF', fontSize: '20px', fontWeight: 'normal', marginBottom: '4px' }}>
                  {profile.display_name || profile.username}
@@ -207,7 +203,6 @@ export default function BuilderPage({ params }) {
          </div>
        </div>
 
-       {/* DROPS */}
        <p style={{ color: 'rgba(240,238,255,0.2)', fontSize: '11px', letterSpacing: '3px', marginBottom: '24px' }}>
          // DROPS
        </p>
@@ -228,6 +223,20 @@ export default function BuilderPage({ params }) {
              onMouseEnter={e => e.currentTarget.style.background = '#0e0e1a'}
              onMouseLeave={e => e.currentTarget.style.background = '#080810'}
            >
+             {drop.thumbnail_url && (
+               <div style={{ marginBottom: '12px' }}>
+                 <img
+                   src={drop.thumbnail_url}
+                   alt={drop.title}
+                   style={{
+                     width: '100%', height: '120px',
+                     objectFit: 'cover',
+                     border: '1px solid rgba(255,255,255,0.06)'
+                   }}
+                 />
+               </div>
+             )}
+
              <Link href={`/drop/${drop.id}`} style={{ textDecoration: 'none' }}>
                <h2 style={{
                  color: '#F0EEFF',
@@ -250,11 +259,9 @@ export default function BuilderPage({ params }) {
                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '12px' }}>
                  {drop.tools_used.map(tool => (
                    <span key={tool} style={{
-                     fontSize: '10px',
-                     padding: '2px 7px',
+                     fontSize: '10px', padding: '2px 7px',
                      border: '1px solid rgba(0,245,255,0.2)',
-                     color: '#00F5FF',
-                     letterSpacing: '1px'
+                     color: '#00F5FF', letterSpacing: '1px'
                    }}>
                      {tool}
                    </span>
