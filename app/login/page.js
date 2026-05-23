@@ -9,12 +9,21 @@ export default function Login() {
   const [mode, setMode] = useState('login')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  // TICKET-022: bot detection state
+  const [honeypot, setHoneypot] = useState('')
+  const [pageLoadTime] = useState(Date.now())
 
   async function handleSubmit() {
     setLoading(true)
     setMessage('')
 
     if (mode === 'signup') {
+      // TICKET-022: silent fail on bot signals
+      if (honeypot || Date.now() - pageLoadTime < 3000) {
+        setLoading(false)
+        return
+      }
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -72,6 +81,17 @@ export default function Login() {
           onChange={e => setPassword(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleSubmit()}
           style={inputStyle}
+        />
+
+        {/* TICKET-022: honeypot — hidden from real users, bots will fill it */}
+        <input
+          type="text"
+          value={honeypot}
+          onChange={e => setHoneypot(e.target.value)}
+          style={{ display: 'none', position: 'absolute', left: '-9999px' }}
+          tabIndex="-1"
+          autoComplete="off"
+          aria-hidden="true"
         />
 
         <button

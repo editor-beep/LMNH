@@ -142,10 +142,11 @@ export default function DropPage({ params }) {
 
   async function handleReport() {
     if (!user) { window.location.href = '/login'; return }
-    await supabase.from('reports').insert({
-      reporter_id: user.id,
-      drop_id: drop.id,
-      reason: reportReason.trim().slice(0, 500),
+    // TICKET-021: RPC handles report insert, count increment, and auto-hide at threshold=3
+    await supabase.rpc('submit_report', {
+      p_reporter_id: user.id,
+      p_drop_id: drop.id,
+      p_reason: reportReason.trim().slice(0, 500),
     })
     setShowReport(false)
     setReportReason('')
