@@ -130,6 +130,16 @@ export default function Feed() {
    fetchTrending()
  }
 
+ async function handleDelete(dropId) {
+   if (!window.confirm('Delete this drop? This cannot be undone.')) return
+   await supabase.from('comments').delete().eq('drop_id', dropId)
+   await supabase.from('likes').delete().eq('drop_id', dropId)
+   await supabase.from('drops').delete().eq('id', dropId)
+   fetchDrops()
+   fetchTrending()
+   fetchPromoted()
+ }
+
  const trendingIds = new Set(trending.map(d => d.id))
  const topDrop = trending[0]
  const filteredTags = tags.filter(t =>
@@ -256,12 +266,30 @@ export default function Feed() {
          <Link href={`/drop/${drop.id}`} style={{ color: 'rgba(240,238,255,0.4)', fontSize: '11px', letterSpacing: '1px', textDecoration: 'none' }}>
            ◎ {drop.comment_count || 0} comments
          </Link>
-         <a href={drop.live_url} target="_blank" rel="noopener noreferrer" style={{
-           color: '#FF2D78', fontSize: '11px', letterSpacing: '1px',
-           textDecoration: 'none', marginLeft: 'auto'
-         }}>
-           visit ↗
-         </a>
+         <div style={{ marginLeft: 'auto', display: 'flex', gap: '16px', alignItems: 'center' }}>
+           <a href={drop.live_url} target="_blank" rel="noopener noreferrer" style={{
+             color: '#FF2D78', fontSize: '11px', letterSpacing: '1px', textDecoration: 'none'
+           }}>
+             visit ↗
+           </a>
+           {user?.id === drop.user_id && (
+             <>
+               <Link href={`/drop/${drop.id}/edit`} style={{
+                 color: 'rgba(0,245,255,0.5)', fontSize: '11px',
+                 letterSpacing: '1px', textDecoration: 'none'
+               }}>
+                 edit
+               </Link>
+               <button onClick={() => handleDelete(drop.id)} style={{
+                 background: 'none', border: 'none', cursor: 'pointer',
+                 color: 'rgba(255,45,120,0.5)', fontSize: '11px',
+                 fontFamily: 'monospace', letterSpacing: '1px', padding: 0
+               }}>
+                 delete
+               </button>
+             </>
+           )}
+         </div>
        </div>
      </div>
    )

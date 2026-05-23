@@ -51,6 +51,14 @@ export default function DropPage({ params }) {
    fetchDrop()
  }
 
+ async function handleDelete() {
+   if (!window.confirm('Delete this drop? This cannot be undone.')) return
+   await supabase.from('comments').delete().eq('drop_id', drop.id)
+   await supabase.from('likes').delete().eq('drop_id', drop.id)
+   await supabase.from('drops').delete().eq('id', drop.id)
+   window.location.href = '/feed'
+ }
+
  async function handleComment() {
    if (!user) { window.location.href = '/login'; return }
    if (!comment.trim()) return
@@ -262,6 +270,23 @@ export default function DropPage({ params }) {
          <span style={{ color: 'rgba(240,238,255,0.2)', fontSize: '13px' }}>
            ◎ {drop.comment_count || 0} comments
          </span>
+         {user?.id === drop.user_id && (
+           <div style={{ marginLeft: 'auto', display: 'flex', gap: '20px', alignItems: 'center' }}>
+             <Link href={`/drop/${drop.id}/edit`} style={{
+               color: 'rgba(0,245,255,0.6)', fontSize: '12px',
+               letterSpacing: '1px', textDecoration: 'none'
+             }}>
+               edit
+             </Link>
+             <button onClick={handleDelete} style={{
+               background: 'none', border: 'none', cursor: 'pointer',
+               color: 'rgba(255,45,120,0.6)', fontSize: '12px',
+               fontFamily: 'monospace', letterSpacing: '1px', padding: 0
+             }}>
+               delete
+             </button>
+           </div>
+         )}
        </div>
 
        {/* COMMENTS */}
