@@ -152,8 +152,9 @@ export default function Feed() {
      <div style={{
        background: isMerit ? '#0a0a14' : isPromoted ? '#0e0e1a' : '#080810',
        padding: '28px 32px',
-       transition: 'background 0.15s',
-       borderLeft: isMerit ? '2px solid #FF2D78' : isPromoted ? '2px solid #C8FF00' : 'none'
+       transition: 'background 0.15s, border-color 0.15s',
+       border: isMerit ? '1px solid rgba(255,45,120,0.4)' : isPromoted ? '1px solid rgba(200,255,0,0.3)' : '1px solid rgba(255,255,255,0.08)',
+       borderLeft: isMerit ? '3px solid #FF2D78' : isPromoted ? '3px solid #C8FF00' : '1px solid rgba(255,255,255,0.08)'
      }}
        onMouseEnter={e => e.currentTarget.style.background = '#0e0e1a'}
        onMouseLeave={e => e.currentTarget.style.background = isMerit ? '#0a0a14' : isPromoted ? '#0e0e1a' : '#080810'}
@@ -453,7 +454,7 @@ export default function Feed() {
            <div style={{ marginBottom: '16px' }}>
              <span style={{ color: '#C8FF00', fontSize: '11px', letterSpacing: '3px' }}>// PROMOTED</span>
            </div>
-           <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(200,255,0,0.06)' }}>
+           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
              {promoted.map(drop => (
                <DropCard key={drop.id} drop={drop} isPromoted={true} isMerit={false} />
              ))}
@@ -496,7 +497,7 @@ export default function Feed() {
          </p>
        )}
 
-       <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: drops.length > 0 ? 'rgba(0,245,255,0.06)' : 'transparent' }}>
+       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
          {drops.map(drop => (
            <DropCard key={drop.id} drop={drop} isPromoted={false} isMerit={false} />
          ))}
