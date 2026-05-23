@@ -75,13 +75,37 @@ export default function NewDrop() {
      setMessage('Title and live URL are required.')
      return
    }
+
+   // TICKET-019: HTTPS enforcement
+   if (!form.live_url.startsWith('https://')) {
+     setMessage('Live URL must use HTTPS.')
+     return
+   }
+
    setLoading(true)
    setMessage('')
+
+   // TICKET-019: Safe Browsing check (server-side so key stays private)
+   const check = await fetch('/api/check-url', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ url: form.live_url })
+   })
+   const { safe } = await check.json()
+   if (!safe) {
+     setMessage('This URL was flagged as potentially unsafe and cannot be posted.')
+     setLoading(false)
+     return
+   }
 
    const tags = form.tags
      .split(',')
      .map(t => t.trim())
      .filter(Boolean)
+
+   // TICKET-020: Mark drops from accounts under 48h as pending
+   const accountAge = Date.now() - new Date(user.created_at).getTime()
+   const isNewAccount = accountAge < 48 * 60 * 60 * 1000
 
    const { error } = await supabase.from('drops').insert({
      user_id: user.id,
@@ -92,11 +116,15 @@ export default function NewDrop() {
      tools_used: form.tools_used,
      tags,
      thumbnail_url: screenshots[0] || null,
-     screenshot_urls: screenshots
+     screenshot_urls: screenshots,
+     pending: isNewAccount
    })
 
    if (error) {
      setMessage(error.message)
+     setLoading(false)
+   } else if (isNewAccount) {
+     setMessage('Your drop has been submitted and will appear in the feed after a short review. Thanks for joining LMNH.')
      setLoading(false)
    } else {
      window.location.href = '/'
