@@ -107,8 +107,8 @@ export default function Feed() {
         .from('drops')
         .select('*, profiles(username, display_name, avatar_url)')
         .in('user_id', ids)
-        .eq('pending', false)
-        .eq('hidden', false)
+        .not('pending', 'is', true)
+        .not('hidden', 'is', true)
         .order('created_at', { ascending: false })
 
       if (selectedTag) query = query.contains('tags', [selectedTag])
@@ -121,13 +121,13 @@ export default function Feed() {
     let query = supabase
       .from('drops')
       .select('*, profiles(username, display_name, avatar_url)')
-      .eq('pending', false)
-      .eq('hidden', false)
+      .not('pending', 'is', true)
+      .not('hidden', 'is', true)
       .order('created_at', { ascending: false })
 
     if (selectedTag) query = query.contains('tags', [selectedTag])
     const { data, error } = await query
-    if (!error) setDrops(data)
+    setDrops(data || [])
     setLoading(false)
   }
 
@@ -136,8 +136,8 @@ export default function Feed() {
       .from('drops')
       .select('*, profiles(username, display_name, avatar_url)')
       .gt('promoted_until', new Date().toISOString())
-      .eq('pending', false)
-      .eq('hidden', false)
+      .not('pending', 'is', true)
+      .not('hidden', 'is', true)
       .order('promoted_until', { ascending: true })
     setPromoted(data || [])
   }
