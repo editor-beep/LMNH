@@ -291,7 +291,7 @@ export default function Home() {
          animation: 'fadeUp 0.8s ease-out both'
        }}>
          <img
-           src="/hero.png"
+           src="/hero.PNG"
            alt="Look Mom No Hands"
            style={{
              width: '100%',
