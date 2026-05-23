@@ -148,54 +148,12 @@ export default function Home() {
        .btn-primary { background: var(--pink); color: #fff; box-shadow: 0 0 20px rgba(255,45,120,0.5); }
        .btn-primary:hover { background: #ff5296; box-shadow: 0 0 32px rgba(255,45,120,0.8); transform: translateY(-2px); }
        .btn-big { font-size: 11px; padding: 18px 32px; }
-       .hero {
-         position: relative; z-index: 2; min-height: 100vh;
-         display: grid; grid-template-columns: 1fr 1fr;
-         align-items: center; padding: 80px 40px 80px 60px; gap: 60px;
-       }
-       .hero-left { position: relative; }
-       .hero-eyebrow {
-         font-family: 'Share Tech Mono', monospace; font-size: 11px;
-         color: var(--cyan); text-transform: uppercase; letter-spacing: 4px;
-         margin-bottom: 32px; display: flex; align-items: center; gap: 12px;
-       }
-       .hero-eyebrow::before { content: '▶'; color: var(--pink); animation: blink 1.2s step-end infinite; }
-       @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-       .hero-title {
-         font-family: 'Press Start 2P', monospace;
-         font-size: clamp(28px, 4vw, 52px); line-height: 1.4; margin-bottom: 32px;
-         animation: glitchIn 0.8s ease-out both;
-       }
-       .t1, .t2 { color: var(--white); display: block; }
-       .t3 {
-         color: var(--pink); display: block;
-         text-shadow: 0 0 30px var(--pink), 0 0 60px rgba(255,45,120,0.4);
-         position: relative;
-       }
-       .t3::before {
-         content: 'NO HANDS'; position: absolute; left: 3px; top: 3px;
-         color: var(--cyan); opacity: 0.4; clip-path: inset(30% 0 40% 0);
-       }
        @keyframes glitchIn {
          0% { opacity: 0; transform: translateX(-20px) skewX(-5deg); }
          60% { transform: translateX(4px) skewX(1deg); opacity: 1; }
          100% { transform: translateX(0) skewX(0); }
        }
-       .hero-sub {
-         font-family: 'Rajdhani', sans-serif; font-size: 20px;
-         line-height: 1.65; color: var(--dim); max-width: 480px; margin-bottom: 48px;
-         animation: fadeUp 0.6s ease-out 0.5s both;
-       }
-       .hero-sub strong { color: var(--white); font-weight: 600; }
-       .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s ease-out 0.7s both; }
        @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-       .hero-manifesto {
-         margin-top: 56px; font-family: 'Share Tech Mono', monospace;
-         font-size: 13px; color: var(--lime); letter-spacing: 3px;
-         text-transform: uppercase; animation: fadeUp 0.6s ease-out 0.9s both;
-       }
-       .hero-manifesto::before { content: '// '; opacity: 0.4; }
-       .hero-right { position: relative; display: flex; flex-direction: column; gap: 16px; animation: fadeUp 0.7s ease-out 0.4s both; }
        .drop-card {
          background: var(--bg2); border: 1px solid rgba(0,245,255,0.15);
          overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; cursor: pointer;
@@ -290,8 +248,6 @@ export default function Home() {
        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
        .reveal.visible { opacity: 1; transform: translateY(0); }
        @media (max-width: 960px) {
-         .hero { grid-template-columns: 1fr; padding: 60px 24px; }
-         .hero-right { display: none; }
          .steps-grid { grid-template-columns: 1fr 1fr; }
          .credits-grid { grid-template-columns: 1fr; }
          section.content, .economy-section, .tools-section, .cta-section { padding: 60px 24px; }
@@ -302,7 +258,6 @@ export default function Home() {
        @media (max-width: 600px) {
          .steps-grid { grid-template-columns: 1fr; }
          .btn-ghost { display: none; }
-         .hero-title { font-size: 24px; }
        }
      `}</style>
 
@@ -319,37 +274,100 @@ export default function Home() {
        </div>
      </nav>
 
-     <section className="hero">
-       <div className="hero-left">
-         <div className="hero-eyebrow">New platform for AI builders</div>
-         <h1 className="hero-title">
-           <span className="t1">LOOK</span>
-           <span className="t2">MOM</span>
-           <span className="t3">NO HANDS</span>
-         </h1>
-         <p className="hero-sub">
-           You built something <strong>wild with AI.</strong> Now there's a home for it.<br/><br/>
-           No gatekeepers. No algorithms you can't see. <strong>Post your work. Engage with others. Earn your spotlight.</strong>
-         </p>
-         <div className="hero-ctas">
-           <Link href="/login" className="btn btn-primary btn-big">Drop Something →</Link>
-           <Link href="/feed" className="btn btn-ghost btn-big">Browse the Feed</Link>
-         </div>
-         <div className="hero-manifesto">Room for all.</div>
-       </div>
-
-       <div className="hero-right" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+     <section style={{
+       position: 'relative',
+       zIndex: 2,
+       display: 'flex',
+       flexDirection: 'column',
+       alignItems: 'center',
+       padding: '60px 40px 80px',
+       textAlign: 'center'
+     }}>
+       {/* HERO IMAGE */}
+       <div style={{
+         width: '100%',
+         maxWidth: '900px',
+         marginBottom: '48px',
+         animation: 'fadeUp 0.8s ease-out both'
+       }}>
          <img
-           src="/hero.PNG"
-           alt="Look Mom No Hands — a robot riding a bike with code everywhere"
+           src="/hero.png"
+           alt="Look Mom No Hands"
            style={{
              width: '100%',
-             maxWidth: '560px',
              height: 'auto',
-             opacity: 0.92,
-             filter: 'drop-shadow(0 0 40px rgba(0,245,255,0.15))'
+             filter: 'drop-shadow(0 0 60px rgba(0,245,255,0.2))'
            }}
          />
+       </div>
+
+       {/* TITLE */}
+       <h1 style={{
+         fontFamily: "'Press Start 2P', monospace",
+         fontSize: 'clamp(24px, 5vw, 56px)',
+         lineHeight: 1.3,
+         marginBottom: '24px',
+         animation: 'glitchIn 0.8s ease-out 0.2s both'
+       }}>
+         <span style={{color: '#F0EEFF', display: 'block'}}>LOOK MOM</span>
+         <span style={{color: '#F0EEFF', display: 'block'}}>NO</span>
+         <span style={{
+           color: '#FF2D78',
+           display: 'block',
+           textShadow: '0 0 30px #FF2D78, 0 0 60px rgba(255,45,120,0.4)',
+           position: 'relative'
+         }}>
+           HANDS
+           <span style={{
+             position: 'absolute',
+             left: '3px',
+             top: '3px',
+             color: '#00F5FF',
+             opacity: 0.4,
+             clipPath: 'inset(30% 0 40% 0)',
+             pointerEvents: 'none'
+           }}>HANDS</span>
+         </span>
+       </h1>
+
+       {/* SUB */}
+       <p style={{
+         fontFamily: "'Rajdhani', sans-serif",
+         fontSize: 'clamp(18px, 2.5vw, 24px)',
+         lineHeight: 1.6,
+         color: 'rgba(240,238,255,0.6)',
+         maxWidth: '600px',
+         marginBottom: '48px',
+         animation: 'fadeUp 0.6s ease-out 0.4s both'
+       }}>
+         You built something <strong style={{color: '#F0EEFF'}}>wild with AI.</strong> Now it has a home.<br/>
+         No gatekeepers. No algorithms you can't see.<br/>
+         <strong style={{color: '#F0EEFF'}}>Post your work. Engage with others. Earn your spotlight.</strong>
+       </p>
+
+       {/* CTAS */}
+       <div style={{
+         display: 'flex',
+         gap: '16px',
+         flexWrap: 'wrap',
+         justifyContent: 'center',
+         marginBottom: '48px',
+         animation: 'fadeUp 0.6s ease-out 0.6s both'
+       }}>
+         <Link href="/login" className="btn btn-primary btn-big">Drop Something →</Link>
+         <Link href="/feed" className="btn btn-ghost btn-big">Browse the Feed</Link>
+       </div>
+
+       {/* MANIFESTO */}
+       <div style={{
+         fontFamily: "'Share Tech Mono', monospace",
+         fontSize: '13px',
+         color: '#C8FF00',
+         letterSpacing: '3px',
+         textTransform: 'uppercase',
+         animation: 'fadeUp 0.6s ease-out 0.8s both'
+       }}>
+         // Room for all.
        </div>
      </section>
 
