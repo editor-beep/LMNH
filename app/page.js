@@ -340,7 +340,7 @@ export default function Home() {
 
        <div className="hero-right" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
          <img
-           src="/hero.png"
+           src="/hero.PNG"
            alt="Look Mom No Hands — a robot riding a bike with code everywhere"
            style={{
              width: '100%',
