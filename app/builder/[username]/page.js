@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
 import Link from 'next/link'
 import Avatar from '../../components/Avatar'
+import { safeUrl } from '../../../lib/sanitize'
 
 export default function BuilderPage({ params }) {
  const [profile, setProfile] = useState(null)
@@ -190,8 +191,8 @@ export default function BuilderPage({ params }) {
            <span style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px' }}>
              <span style={{ color: '#C8FF00' }}>{profile.credits_balance}</span> credits
            </span>
-           {profile.website_url && (
-             <a href={profile.website_url} target="_blank" rel="noopener noreferrer" style={{
+           {safeUrl(profile.website_url) && (
+             <a href={safeUrl(profile.website_url)} target="_blank" rel="noopener noreferrer" style={{
                color: 'rgba(240,238,255,0.4)',
                fontSize: '12px',
                textDecoration: 'none',
@@ -276,10 +277,12 @@ export default function BuilderPage({ params }) {
                <span style={{ color: 'rgba(240,238,255,0.3)', fontSize: '11px' }}>
                  ◎ {drop.comment_count || 0}
                </span>
-               <a href={drop.live_url} target="_blank" rel="noopener noreferrer"
-                 style={{ color: '#FF2D78', fontSize: '11px', textDecoration: 'none', marginLeft: 'auto' }}>
-                 visit ↗
-               </a>
+               {safeUrl(drop.live_url) && (
+                 <a href={safeUrl(drop.live_url)} target="_blank" rel="noopener noreferrer"
+                   style={{ color: '#FF2D78', fontSize: '11px', textDecoration: 'none', marginLeft: 'auto' }}>
+                   visit ↗
+                 </a>
+               )}
              </div>
            </div>
          ))}

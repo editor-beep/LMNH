@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import Link from 'next/link'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -18,15 +19,15 @@ export default function Login() {
         email,
         password,
         options: {
-          emailRedirectTo: 'https://lmnh.vercel.app'
-        }
+          emailRedirectTo: `${window.location.origin}/welcome`,
+        },
       })
       if (error) setMessage(error.message)
-      else setMessage('Check your email to confirm your account.')
+      else window.location.href = '/welcome'
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) setMessage(error.message)
-      else window.location.href = '/'
+      else window.location.href = '/feed'
     }
     setLoading(false)
   }
@@ -69,6 +70,7 @@ export default function Login() {
           placeholder="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleSubmit()}
           style={inputStyle}
         />
 
@@ -86,10 +88,18 @@ export default function Login() {
           </p>
         )}
 
-        <p style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px', marginTop: '24px' }}>
-          {mode === 'login' ? "No account? " : "Have an account? "}
+        {mode === 'login' && (
+          <p style={{ marginTop: '16px' }}>
+            <Link href="/forgot-password" style={{ color: 'rgba(240,238,255,0.3)', fontSize: '12px', textDecoration: 'none' }}>
+              Forgot password?
+            </Link>
+          </p>
+        )}
+
+        <p style={{ color: 'rgba(240,238,255,0.4)', fontSize: '12px', marginTop: '16px' }}>
+          {mode === 'login' ? 'No account? ' : 'Have an account? '}
           <span
-            onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+            onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setMessage('') }}
             style={{ color: '#00F5FF', cursor: 'pointer' }}
           >
             {mode === 'login' ? 'Sign up' : 'Sign in'}
@@ -110,7 +120,8 @@ const inputStyle = {
   fontFamily: 'monospace',
   fontSize: '14px',
   outline: 'none',
-  display: 'block'
+  display: 'block',
+  boxSizing: 'border-box',
 }
 
 const btnStyle = {
@@ -123,5 +134,5 @@ const btnStyle = {
   fontSize: '13px',
   cursor: 'pointer',
   letterSpacing: '1px',
-  marginTop: '8px'
+  marginTop: '8px',
 }
