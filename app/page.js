@@ -312,8 +312,10 @@ export default function Home() {
      <nav>
        <Link href="/" className="nav-logo">LMNH <span className="accent">↗</span></Link>
        <div className="nav-links">
-         <Link href="/feed" className="btn btn-ghost">Browse</Link>
-         <Link href="/login" className="btn btn-primary">Sign Up →</Link>
+         <Link href="/feed" className="btn btn-primary btn-big" style={{fontSize:'10px', padding:'14px 28px'}}>
+           Browse the Feed →
+         </Link>
+         <Link href="/login" className="btn btn-ghost">Sign Up</Link>
        </div>
      </nav>
 
@@ -336,71 +338,18 @@ export default function Home() {
          <div className="hero-manifesto">Room for all.</div>
        </div>
 
-       <div className="hero-right">
-         <div className="drop-card">
-           <div className="drop-thumb drop-thumb-1">
-             <div className="pixel-art" style={{gridTemplateColumns: 'repeat(10,7px)'}}>
-               {['#FF2D78','','#FF2D78','','#9B30FF','','#FF2D78','','#FF2D78','',
-                 '','#9B30FF','','#FF2D78','','#9B30FF','','#FF2D78','','#9B30FF',
-                 '#FF2D78','','#9B30FF','','#FF2D78','','#9B30FF','','#FF2D78',''].map((c, i) => (
-                 <div key={i} className="px" style={{background: c || 'transparent'}} />
-               ))}
-             </div>
-           </div>
-           <div className="drop-info">
-             <div className="drop-title">Endless Dungeon in a Weekend</div>
-             <div className="drop-meta">
-               <span className="drop-builder">@wizardperson</span>
-               <div className="drop-tools">
-                 <span className="tool-pill tp-pink">Claude</span>
-                 <span className="tool-pill tp-purp">Replit</span>
-               </div>
-             </div>
-           </div>
-         </div>
-
-         <div className="drop-card">
-           <div className="drop-thumb drop-thumb-2">
-             <div className="pixel-art" style={{gridTemplateColumns: 'repeat(10,7px)'}}>
-               {['','#00F5FF','','#00F5FF','','#00F5FF','','#00F5FF','','',
-                 '#00F5FF','','#1A1AFF','','#00F5FF','','#1A1AFF','','#00F5FF','',
-                 '','#00F5FF','','#00F5FF','','#00F5FF','','#00F5FF','','#00F5FF'].map((c, i) => (
-                 <div key={i} className="px" style={{background: c || 'transparent'}} />
-               ))}
-             </div>
-           </div>
-           <div className="drop-info">
-             <div className="drop-title">My Mom's Recipe as a Horror Game</div>
-             <div className="drop-meta">
-               <span className="drop-builder">@cursed_dev</span>
-               <div className="drop-tools">
-                 <span className="tool-pill tp-cyan">Bolt</span>
-                 <span className="tool-pill tp-cyan">v0</span>
-               </div>
-             </div>
-           </div>
-         </div>
-
-         <div className="drop-card">
-           <div className="drop-thumb drop-thumb-3">
-             <div className="pixel-art" style={{gridTemplateColumns: 'repeat(10,7px)'}}>
-               {['#C8FF00','','','#C8FF00','','','#C8FF00','','','#C8FF00',
-                 '','#C8FF00','','','#C8FF00','','','#C8FF00','','',
-                 '#C8FF00','','#C8FF00','','#C8FF00','','#C8FF00','','#C8FF00',''].map((c, i) => (
-                 <div key={i} className="px" style={{background: c || 'transparent'}} />
-               ))}
-             </div>
-           </div>
-           <div className="drop-info">
-             <div className="drop-title">Interactive Poem Generator (it judges you)</div>
-             <div className="drop-meta">
-               <span className="drop-builder">@victoria_m</span>
-               <div className="drop-tools">
-                 <span className="tool-pill tp-lime">Claude</span>
-               </div>
-             </div>
-           </div>
-         </div>
+       <div className="hero-right" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+         <img
+           src="/hero.png"
+           alt="Look Mom No Hands — a robot riding a bike with code everywhere"
+           style={{
+             width: '100%',
+             maxWidth: '560px',
+             height: 'auto',
+             opacity: 0.92,
+             filter: 'drop-shadow(0 0 40px rgba(0,245,255,0.15))'
+           }}
+         />
        </div>
      </section>
 
