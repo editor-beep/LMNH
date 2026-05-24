@@ -1,4 +1,5 @@
 import NeonBackground from '../components/NeonBackground'
+import Link from 'next/link'
 
 export default function ContactPage() {
   return (
@@ -14,6 +15,9 @@ export default function ContactPage() {
           zIndex: 2
         }}
       >
+        <Link href="/feed" style={{ color: '#00F5FF', textDecoration: 'none', fontSize: '12px', letterSpacing: '1px' }}>
+          ← Back to Feed
+        </Link>
         <h1>Contact</h1>
         <p>Data Controller: Look Mom No Hands</p>
         <p>Copyright The Means of Production</p>

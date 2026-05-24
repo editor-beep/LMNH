@@ -1,4 +1,5 @@
 import NeonBackground from '../components/NeonBackground'
+import Link from 'next/link'
 
 export default function PrivacyPage() {
   return (
@@ -14,6 +15,9 @@ export default function PrivacyPage() {
           zIndex: 2
         }}
       >
+        <Link href="/feed" style={{ color: '#00F5FF', textDecoration: 'none', fontSize: '12px', letterSpacing: '1px' }}>
+          ← Back to Feed
+        </Link>
         <h1>Privacy Policy</h1>
         <p>
           We collect only data required to provide the service, secure accounts, and improve product quality. We do
