@@ -36,6 +36,16 @@ export default function Feed() {
         supabase.rpc('award_login_credits', { p_user_id: data.user.id })
         fetchLikedDrops(data.user.id)
         fetchNotifCount(data.user.id)
+
+        // Auto-graduate pending drops once account is established (>48h)
+        const accountAge = Date.now() - new Date(data.user.created_at).getTime()
+        if (accountAge > 48 * 60 * 60 * 1000) {
+          supabase.from('drops')
+            .update({ pending: false })
+            .eq('user_id', data.user.id)
+            .eq('pending', true)
+            .then(({ error }) => { if (!error) fetchDrops() })
+        }
       }
     })
     fetchPromoted()
