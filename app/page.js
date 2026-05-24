@@ -389,7 +389,7 @@ export default function Home() {
          {[
            { num: '01', icon: '🔨', title: 'Build Something', desc: "Use Claude, Bolt, Replit, v0 — whatever. Make a game, a site, a weird interactive thing. Doesn't have to be good. Has to be yours.", color: 'var(--pink)' },
            { num: '02', icon: '📡', title: 'Drop It', desc: 'Post your Drop: link to the live thing, describe it, tag your tools. Add a process video if you want. Show your work.', color: 'var(--cyan)' },
-           { num: '03', icon: '👁', title: 'Participate', desc: 'Follow builders. Watch videos. Leave real comments. Every action earns credits — a closed-loop economy that keeps the community alive.', color: 'var(--lime)' },
+           { num: '03', icon: '👁', title: 'Participate', desc: 'Follow builders. Watch videos. Leave real comments. Every action earns credits. Think of it like arcade tickets: help others get seen, earn tickets, then use those tickets to boost your own Drop.', color: 'var(--lime)' },
            { num: '04', icon: '⚡', title: 'Earn Your Spotlight', desc: 'Spend credits to promote your Drop in the feed rotation. Everyone gets a fair shot. No ads. No credit cards. Room for all.', color: 'var(--purple)' },
          ].map(s => (
            <div key={s.num} className="step">
@@ -408,7 +408,7 @@ export default function Home() {
          <h2 className="section-title">The Credit Economy</h2>
        </div>
        <p className="reveal" style={{fontFamily:'Rajdhani,sans-serif', fontSize:'18px', maxWidth:'600px', lineHeight:'1.7', color:'var(--dim)'}}>
-         No real money. Ever. You earn credits by being a good citizen. You spend them to promote your work. The more you participate, the more visible you become.
+         No real money. Ever. You earn credits by helping the community (logging in, following, watching, liking, and commenting). Then you spend those credits to promote your own Drop. In plain English: contribute first, then use what you earned to get more visibility.
        </p>
        <div className="credits-grid">
          <div className="credit-block earn reveal">
