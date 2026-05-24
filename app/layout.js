@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -11,8 +12,24 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, padding: 0, background: '#080810' }}>
+      <body className={inter.className} style={{ margin: 0, padding: 0, background: '#080810' }}>
         {children}
+        <footer
+          style={{
+            borderTop: '1px solid #193355',
+            marginTop: 40,
+            padding: '20px',
+            color: '#9cb3d6',
+            textAlign: 'center',
+          }}
+        >
+          <nav style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms & Conditions</Link>
+            <Link href="/cookies">Cookie Policy</Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
+        </footer>
         <Analytics />
       </body>
     </html>
