@@ -340,9 +340,9 @@ export default function Home() {
          marginBottom: '48px',
          animation: 'fadeUp 0.6s ease-out 0.4s both'
        }}>
-         You built something <strong style={{color: '#F0EEFF'}}>wild with AI.</strong> Now it has a home.<br/>
-         No gatekeepers. No algorithms you can't see.<br/>
-         <strong style={{color: '#F0EEFF'}}>Post your work. Engage with others. Earn your spotlight.</strong>
+         You built something <strong style={{color: '#F0EEFF'}}>with AI.</strong> Now share it.<br/>
+         No gatekeepers. No hidden algorithm.<br/>
+         <strong style={{color: '#F0EEFF'}}>Post your work. Connect. Earn visibility.</strong>
        </p>
 
        {/* CTAS */}
@@ -373,8 +373,8 @@ export default function Home() {
 
      <div className="ticker">
        <div className="ticker-track">
-         {['BUILD IT','DROP IT','SHARE IT','EARN IT','ROOM FOR ALL','NO CODE REQUIRED','LOOK MOM NO HANDS',
-           'BUILD IT','DROP IT','SHARE IT','EARN IT','ROOM FOR ALL','NO CODE REQUIRED','LOOK MOM NO HANDS'].map((t, i) => (
+         {['BUILD','DROP','SHARE','EARN','ROOM FOR ALL','NO CODE REQUIRED',
+           'BUILD','DROP','SHARE','EARN','ROOM FOR ALL','NO CODE REQUIRED'].map((t, i) => (
            <span key={i}>{t}</span>
          ))}
        </div>
@@ -387,10 +387,10 @@ export default function Home() {
        </div>
        <div className="steps-grid reveal">
          {[
-           { num: '01', icon: '🔨', title: 'Build Something', desc: "Use Claude, Bolt, Replit, v0 — whatever. Make a game, a site, a weird interactive thing. Doesn't have to be good. Has to be yours.", color: 'var(--pink)' },
-           { num: '02', icon: '📡', title: 'Drop It', desc: 'Post your Drop: link to the live thing, describe it, tag your tools. Add a process video if you want. Show your work.', color: 'var(--cyan)' },
-           { num: '03', icon: '👁', title: 'Participate', desc: 'Follow builders. Watch videos. Leave real comments. Every action earns credits. Think of it like arcade tickets: help others get seen, earn tickets, then use those tickets to boost your own Drop.', color: 'var(--lime)' },
-           { num: '04', icon: '⚡', title: 'Earn Your Spotlight', desc: 'Spend credits to promote your Drop in the feed rotation. Everyone gets a fair shot. No ads. No credit cards. Room for all.', color: 'var(--purple)' },
+           { num: '01', icon: '🔨', title: 'Build Something', desc: "Use Claude, Bolt, Replit, v0, or anything else. Make something that's yours.", color: 'var(--pink)' },
+           { num: '02', icon: '📡', title: 'Drop It', desc: 'Post your Drop with a live link, short description, and tool tags.', color: 'var(--cyan)' },
+           { num: '03', icon: '👁', title: 'Participate', desc: 'Follow builders, watch videos, and leave comments to earn credits.', color: 'var(--lime)' },
+           { num: '04', icon: '⚡', title: 'Earn Your Spotlight', desc: 'Spend credits to promote your Drop. Fair rotation. No ads.', color: 'var(--purple)' },
          ].map(s => (
            <div key={s.num} className="step">
              <span className="step-num" style={{color: s.color}}>{s.num}</span>
@@ -408,7 +408,7 @@ export default function Home() {
          <h2 className="section-title">The Credit Economy</h2>
        </div>
        <p className="reveal" style={{fontFamily:'Rajdhani,sans-serif', fontSize:'18px', maxWidth:'600px', lineHeight:'1.7', color:'var(--dim)'}}>
-         No real money. Ever. You earn credits by helping the community (logging in, following, watching, liking, and commenting). Then you spend those credits to promote your own Drop. In plain English: contribute first, then use what you earned to get more visibility.
+         No real money. Earn credits by helping the community, then spend them to promote your Drop.
        </p>
        <div className="credits-grid">
          <div className="credit-block earn reveal">
@@ -440,7 +440,7 @@ export default function Home() {
          <h2 className="section-title">Built With Anything</h2>
        </div>
        <p className="reveal" style={{fontFamily:'Rajdhani,sans-serif', fontSize:'18px', maxWidth:'560px', color:'var(--dim)', lineHeight:'1.7'}}>
-         LMNH doesn't care what you used. Tag your tools, find your people, filter the whole feed by stack.
+         Use any tool. Tag your stack and filter the feed.
        </p>
        <div className="tools-wrap reveal">
          {[['Claude',true],['Bolt.new',false],['Replit',true],['v0 by Vercel',false],['Lovable',false],['Cursor',false],['Windsurf',false],['GitHub Copilot',true],['Gemini',false],['ChatGPT',false],['Firebase Studio',false],['Figma Make',false],['Emergent',false],['+ anything else',false]].map(([t,h]) => (
@@ -452,7 +452,7 @@ export default function Home() {
      <section className="cta-section" id="join">
        <div className="cta-glow" />
        <h2 className="cta-title reveal">READY TO<br/><span className="pink">DROP?</span></h2>
-       <p className="cta-sub reveal">Sign up free. Get 200 bonus credits. Be one of the first builders in the feed.</p>
+       <p className="cta-sub reveal">Sign up free and get 200 credits.</p>
        <div className="cta-actions reveal">
          <Link href="/login" className="btn btn-primary btn-big">Create Account →</Link>
          <Link href="/feed" className="btn btn-ghost btn-big">Browse the Feed</Link>
