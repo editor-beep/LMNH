@@ -102,7 +102,7 @@ export default function About() {
           {/* CREDIT ECONOMY NOTE */}
           <div style={{ borderLeft: '2px solid rgba(0,245,255,0.2)', paddingLeft: '24px' }}>
             <p style={{ ...paraStyle, fontSize: '14px', color: 'rgba(240,238,255,0.4)' }}>
-              The credit economy is how we keep it fair. Every like, comment, follow, and video watch earns you credits. Credits buy you visibility in the feed. No real money. No algorithm you can't see. No early adopter advantage that compounds forever.
+              Credits are our points system, and they keep things fair. When you like, comment, follow, or watch videos, you earn credits. You can then spend those credits to promote your Drop in the feed. No real money, no hidden ranking tricks, and no permanent head start for early users.
             </p>
             <p style={{ ...paraStyle, fontSize: '14px', color: 'rgba(240,238,255,0.4)' }}>
               Show up. Earn your spot. Share what you built.
