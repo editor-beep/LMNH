@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
